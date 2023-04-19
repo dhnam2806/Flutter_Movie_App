@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/pages/movie_cast.dart';
 import 'package:movieapp/widgets/vote_circle.dart';
-
 import '../models/movie.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   final Movie movie;
@@ -53,7 +53,8 @@ class MovieDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: 80),
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.only(
+                    left: 16, right: 16, top: 12, bottom: 12),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -80,7 +81,7 @@ class MovieDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 24),
+                    const SizedBox(width: 32),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -133,33 +134,23 @@ class MovieDetailScreen extends StatelessWidget {
                     const SizedBox(height: 12),
                     Text(
                       movie.overview,
-                      style: const TextStyle(color: Colors.white, fontSize: 18),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24),
                     const Text(
                       'Cast',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 24,
                           color: Colors.white),
                     ),
                     const SizedBox(height: 8),
-                    MovieCast(),
-                    // FutureBuilder<List<Cast>>(builder: (context, snapshot) {
-                    //   if (snapshot.hasData) {
-                    //     return SingleChildScrollView(
-                    //       scrollDirection: Axis.horizontal,
-                    //       child: Row(
-                    //         children: snapshot.data!
-                    //             .map((cast) => MovieCast(cast: cast))
-                    //             .toList(),
-                    //       ),
-                        
-                    //     );
-                    //   } else {
-                    //     return const Center(child: CircularProgressIndicator());
-                    //   }
-                    // }),
+                    MovieCast(
+                      movieId: movie.id,
+                    ),
                   ],
                 ),
               ),

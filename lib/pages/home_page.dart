@@ -86,6 +86,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               )),
+          
           const UpComing(),
           const TrendingPage(),
           const PopularPage(),

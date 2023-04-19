@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/pages/movie_detail.dart';
-
 import '../data/api_handle.dart';
 import '../models/movie.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ListMovie extends StatefulWidget {
   final String type;
