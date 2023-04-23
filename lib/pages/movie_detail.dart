@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/pages/get_video.dart';
 import 'package:movieapp/pages/movie_cast.dart';
 import 'package:movieapp/widgets/vote_circle.dart';
 import '../models/movie.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   final Movie movie;
@@ -150,6 +150,12 @@ class MovieDetailScreen extends StatelessWidget {
                     const SizedBox(height: 8),
                     MovieCast(
                       movieId: movie.id,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => WatchVideo(movieId: movie.id)));
+                      },
+                      child: const Text('Play'),
                     ),
                   ],
                 ),

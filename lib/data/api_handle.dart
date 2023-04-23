@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/cast.dart';
 import '../models/movie.dart';
+import '../models/video.dart';
 
 class ApiHandle {
   static const _apiKey = '97d39b50c99a2fd2db9f2ed346557b45';
@@ -46,4 +47,28 @@ class ApiHandle {
     }
   }
 
+  Future<List<Video>> getMovieVideo(int movieId) async {
+    final response = await http.get(
+      Uri.parse('$_baseUrl/movie/$movieId/videos?api_key=$_apiKey'),
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonList = json.decode(response.body)['results'];
+      return jsonList.map((json) => Video.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load movies');
+    }
+  }
+
+  Future<List<dynamic>> searchMovies(String query, String apiKey) async {
+    final response = await http.get(
+      Uri.parse('$_baseUrl/search/movie?api_key=$apiKey&query=$query'),
+    );
+    if (response.statusCode == 200) {
+      final decoded = jsonDecode(response.body);
+      return decoded['results'];
+    } else {
+      throw Exception('Failed to load movies');
+    }
+  }
 }
