@@ -4,6 +4,7 @@ import 'package:movieapp/const/colors.dart';
 import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/movie_detail.dart';
 import 'package:movieapp/pages/popular_page.dart';
+import 'package:movieapp/pages/search_page.dart';
 import 'package:movieapp/pages/trending_page.dart';
 
 import 'models/movie.dart';
@@ -25,8 +26,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: bgColor,
         ),
-        routes: {
-          '/': (context) => HomePage(),
-        });
+        home: const HomePage(),
+        // home: SearchPage(),
+        );
   }
 }

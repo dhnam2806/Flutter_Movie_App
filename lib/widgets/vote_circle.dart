@@ -13,8 +13,8 @@ class VoteCircle extends StatelessWidget {
     final percentage = value.clamp(0.0, 1.0);
 
     return Container(
-      width: 80,
-      height: 80,
+      width: 60,
+      height: 60,
       child: Stack(
         alignment: Alignment.center,
         children: [

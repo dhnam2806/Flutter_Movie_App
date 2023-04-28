@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/cast.dart';
 import '../models/movie.dart';
+import '../models/search.dart';
 import '../models/video.dart';
 
 class ApiHandle {
@@ -60,13 +61,26 @@ class ApiHandle {
     }
   }
 
-  Future<List<dynamic>> searchMovies(String query, String apiKey) async {
+  // Future<List<dynamic>> searchMovies(String query) async {
+  //   final response = await http.get(
+  //     Uri.parse('$_baseUrl/search/movie?api_key=$_apiKey&query=$query'),
+  //   );
+  //   if (response.statusCode == 200) {
+  //     final List<dynamic> jsonList = json.decode(response.body)['results'];
+  //     return jsonList.map((json) => Video.fromJson(json)).toList();
+  //   } else {
+  //     throw Exception('Failed to load movies');
+  //   }
+  // }
+
+  Future<List<Search>> searchMovies(String query) async {
     final response = await http.get(
-      Uri.parse('$_baseUrl/search/movie?api_key=$apiKey&query=$query'),
+      Uri.parse(
+          'https://api.themoviedb.org/3/search/movie?api_key=$_apiKey&query=$query'),
     );
     if (response.statusCode == 200) {
-      final decoded = jsonDecode(response.body);
-      return decoded['results'];
+      final List<dynamic> jsonList = json.decode(response.body)['results'];
+      return jsonList.map((json) => Search.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load movies');
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/const/colors.dart';
 import 'package:movieapp/pages/get_video.dart';
 import 'package:movieapp/pages/movie_cast.dart';
 import 'package:movieapp/widgets/vote_circle.dart';
@@ -11,12 +12,13 @@ class MovieDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: bgColor,
       body: Stack(children: [
         Opacity(
           opacity: 0.6,
           child: Image.network(
             movie.fullPosterPath,
-            height: 300,
+            height: 310,
             width: double.infinity,
             fit: BoxFit.cover,
           ),
@@ -53,10 +55,9 @@ class MovieDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: 80),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 16, right: 16, top: 12, bottom: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
                       decoration: BoxDecoration(
@@ -75,45 +76,54 @@ class MovieDetailScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
                           movie.fullPosterPath,
-                          height: 240,
-                          width: 160,
+                          height: 260,
+                          width: 180,
                           fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 32),
+                    const SizedBox(width: 40),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Release Date:',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          movie.releaseDate,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => WatchVideo(
+                                  movieId: movie.id,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 84,
+                            height: 84,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.red,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.red.withOpacity(0.8),
+                                  spreadRadius: 4,
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 0),
+                                ),
+                              ],
+                            ),
+                            child: const Icon(
+                              Icons.play_arrow,
+                              color: Colors.white,
+                              size: 60,
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            const Text(
-                              'Rating:',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.white),
-                            ),
-                            const SizedBox(height: 8),
-                            VoteCircle(voteAverage: movie.voteAverage),
-                          ],
-                        ),
+                        const SizedBox(height: 16),
+                        const Text("Watch Trailer",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ],
@@ -139,7 +149,37 @@ class MovieDetailScreen extends StatelessWidget {
                         fontSize: 18,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Release Date:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: Colors.white),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      movie.releaseDate,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Text(
+                          'Rating:',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white),
+                        ),
+                        const SizedBox(height: 8),
+                        VoteCircle(voteAverage: movie.voteAverage),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
                     const Text(
                       'Cast',
                       style: TextStyle(
@@ -150,12 +190,6 @@ class MovieDetailScreen extends StatelessWidget {
                     const SizedBox(height: 8),
                     MovieCast(
                       movieId: movie.id,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => WatchVideo(movieId: movie.id)));
-                      },
-                      child: const Text('Play'),
                     ),
                   ],
                 ),

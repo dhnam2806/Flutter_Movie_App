@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/const/colors.dart';
+import 'package:movieapp/pages/search_page.dart';
 
 class CustomNavBar extends StatelessWidget {
   const CustomNavBar({super.key});
@@ -22,8 +23,15 @@ class CustomNavBar extends StatelessWidget {
           child: Icon(Icons.home, size: 28, color: Colors.white),
         ),
         InkWell(
-          onTap: () {},
-          child: Icon(Icons.category, size: 28, color: Colors.white),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SearchPage(),
+              ),
+            );
+          },
+          child: Icon(Icons.search, size: 28, color: Colors.white),
         ),
         InkWell(
           onTap: () {},
