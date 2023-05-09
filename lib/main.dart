@@ -6,6 +6,7 @@ import 'package:movieapp/pages/sign_in_page.dart';
 import 'package:movieapp/pages/movie_detail.dart';
 import 'package:movieapp/pages/popular_page.dart';
 import 'package:movieapp/pages/search_page.dart';
+import 'package:movieapp/pages/sign_up_page.dart';
 import 'package:movieapp/pages/trending_page.dart';
 
 import 'models/movie.dart';
