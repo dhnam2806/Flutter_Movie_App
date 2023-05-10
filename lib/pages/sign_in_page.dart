@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapp/const/colors.dart';
 
@@ -9,8 +10,22 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim());
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,15 +61,18 @@ class _SignInPageState extends State<SignInPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white30,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: TextField(
                   keyboardType: TextInputType.emailAddress,
-                  style: const TextStyle(color: Colors.white, fontSize: 16),
-                  controller: emailController,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                  controller: _emailController,
                   decoration: const InputDecoration(
                     icon: Padding(
                       padding: EdgeInsets.only(left: 12.0),
@@ -78,7 +96,7 @@ class _SignInPageState extends State<SignInPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white30,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Padding(
@@ -86,7 +104,7 @@ class _SignInPageState extends State<SignInPage> {
                 child: TextField(
                   obscureText: true,
                   style: const TextStyle(color: Colors.white),
-                  controller: passwordController,
+                  controller: _passwordController,
                   decoration: const InputDecoration(
                     icon: Padding(
                       padding: EdgeInsets.only(left: 12.0),
@@ -108,23 +126,53 @@ class _SignInPageState extends State<SignInPage> {
             ),
           ),
 
+          // forgot password
+          const SizedBox(height: 12.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => ForgotPasswordPage(),
+                  //   ),
+                  // );
+                },
+                child: const Text("Forgot Password?",
+                    style: TextStyle(
+                      color: Colors.blue,
+                    )),
+              ),
+              const SizedBox(width: 20.0),
+            ],
+          ),
+
           // Sign In Button
           const SizedBox(height: 16),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SizedBox(
               width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextButton(
-                onPressed: () {},
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  signIn();
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
                 child: const Text(
-                  'Sign In',
+                  "Sign In",
                   style: TextStyle(
-                    color: Colors.white,
                     fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

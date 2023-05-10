@@ -13,6 +13,9 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
+  Future signUp() async {}
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white30,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
@@ -81,7 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white30,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
@@ -113,7 +116,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white30,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
@@ -149,7 +152,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white30,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
@@ -178,20 +181,27 @@ class _SignUpPageState extends State<SignUpPage> {
               // Sign Up Button
               const SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: SizedBox(
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      signUp();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
                     child: const Text(
-                      'Sign Up',
+                      "Sign Up",
                       style: TextStyle(
-                        color: Colors.white,
                         fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -203,12 +213,12 @@ class _SignUpPageState extends State<SignUpPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
-                  Text("Already have an account?",
+                  Text("Already have an account? ",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       )),
-                  Text("Sign In Now",
+                  Text("Sign In",
                       style: TextStyle(
                         color: Colors.blue,
                         fontSize: 16,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:movieapp/const/colors.dart';
 import 'package:movieapp/pages/home_page.dart';
+import 'package:movieapp/pages/main_page.dart';
 import 'package:movieapp/pages/sign_in_page.dart';
 import 'package:movieapp/pages/movie_detail.dart';
 import 'package:movieapp/pages/popular_page.dart';
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: bgColor,
       ),
       // home: const HomePage(),
-      home: const SignInPage(),
+      home: const SignUpPage(),
+      // home: MainPage(),
     );
   }
 }

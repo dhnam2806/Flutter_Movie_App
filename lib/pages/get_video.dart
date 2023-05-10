@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/const/colors.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../data/api_handle.dart';
@@ -47,6 +48,7 @@ class _WatchVideoState extends State<WatchVideo> {
             ),
           );
           return Scaffold(
+            backgroundColor: bgColor,
             appBar: AppBar(
               title: Text(video.name),
               backgroundColor: Colors.transparent,

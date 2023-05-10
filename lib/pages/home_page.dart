@@ -4,7 +4,7 @@ import 'package:movieapp/pages/popular_page.dart';
 import 'package:movieapp/pages/upcoming_page.dart';
 
 import '../models/movie.dart';
-import 'custom_navbar.dart';
+import '../widgets/custom_navbar.dart';
 import 'trending_page.dart';
 
 class HomePage extends StatefulWidget {
