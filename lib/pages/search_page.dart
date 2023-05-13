@@ -21,15 +21,10 @@ class _SearchPageState extends State<SearchPage> {
   List<dynamic> _searchResults = [];
   Future<List<Search>>? search;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   search = ApiHandle().searchMovies(_searchQuery);
-  // }
 
-  Future<List<dynamic>> searchMovies(String query, String apiKey) async {
+  Future<List<dynamic>> searchMovies(String query) async {
     final url = Uri.parse(
-        'https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query');
+        'https://api.themoviedb.org/3/search/movie?api_key=97d39b50c99a2fd2db9f2ed346557b45&query=$query');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final decoded = jsonDecode(response.body);
@@ -57,6 +52,12 @@ class _SearchPageState extends State<SearchPage> {
       home: Scaffold(
         backgroundColor: bgColor,
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: const Text('Movie Search'),
           backgroundColor: Colors.transparent,
         ),
@@ -90,7 +91,7 @@ class _SearchPageState extends State<SearchPage> {
               Expanded(
                 child: FutureBuilder<List<dynamic>>(
                   future: searchMovies(
-                      _searchQuery, '97d39b50c99a2fd2db9f2ed346557b45'),
+                      _searchQuery),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       _searchResults = snapshot.data!;
@@ -100,22 +101,6 @@ class _SearchPageState extends State<SearchPage> {
                           var movie = _searchResults[index];
                           return GestureDetector(
                             onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => MovieDetailScreen(
-                              //       movie: Movie(
-                              //         id: movie["id"],
-                              //         title: movie["title"],
-                              //         overview: movie["overview"],
-                              //         posterPath: movie["poster_path"],
-                              //         backdropPath: movie["backdrop_path"],
-                              //         releaseDate: movie["release_date"],
-                              //         voteAverage: movie["vote_average"],
-                              //       ),
-                              //     ),
-                              //   ),
-                              // );
                               _showMovieDetails(
                                   context,
                                   Movie(

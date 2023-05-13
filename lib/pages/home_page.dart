@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapp/const/colors.dart';
 import 'package:movieapp/pages/popular_page.dart';
@@ -17,6 +18,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Movie> movies = [];
   TextEditingController searchController = TextEditingController();
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,15 +35,16 @@ class _HomePageState extends State<HomePage> {
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text(
-              'Hello, User',
-              style: TextStyle(
+              'Hello, ${user.email!}',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
               ),
+              maxLines: 2,
             ),
-            Text(
+            const Text(
               'What do you want to watch today?',
               style: TextStyle(
                 color: Colors.white70,
@@ -50,6 +54,17 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.logout,
+              size: 32,
+            ),
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
           child: Column(
@@ -86,7 +101,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               )),
-          
           const UpComing(),
           const TrendingPage(),
           const PopularPage(),

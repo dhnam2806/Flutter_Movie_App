@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movieapp/const/colors.dart';
+import 'package:movieapp/pages/sign_in_page.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+  final VoidCallback showSignInPage;
+  const SignUpPage({super.key, required this.showSignInPage});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -14,7 +18,59 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-  Future signUp() async {}
+  Future signUp() async {
+    if (passwordController.text.trim() ==
+        confirmPasswordController.text.trim()) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Account created successfully'),
+      //   ),
+      // );
+    } else {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Password and Confirm Password do not match'),
+      //   ),
+      // );
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              icon: const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 32,
+              ),
+              title: const Text('Error'),
+              content: const Text('Password and Confirm Password do not match'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('OK',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                        )))
+              ],
+            );
+          });
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +88,16 @@ class _SignUpPageState extends State<SignUpPage> {
                 size: 100,
                 color: Colors.red,
               )),
-              const Text(
+              Text(
                 'Movie App',
-                style: TextStyle(
+                style: GoogleFonts.bebasNeue(
                   color: Colors.red,
-                  fontSize: 30,
+                  fontSize: 36,
                   fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 8),
               const Text('Enjoy the world of movies',
                   style: TextStyle(
                     color: Colors.white,
@@ -48,35 +105,35 @@ class _SignUpPageState extends State<SignUpPage> {
                   )),
 
               // First Name TextField
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white30,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
-                    child: TextField(
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
-                      controller: nameController,
-                      decoration: const InputDecoration(
-                        icon: Padding(
-                          padding: EdgeInsets.only(left: 12.0),
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.white,
-                          ),
-                        ),
-                        border: InputBorder.none,
-                        hintText: 'Name',
-                        hintStyle: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              const SizedBox(height: 32),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       color: Colors.white30,
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //     child: Padding(
+              //       padding: const EdgeInsets.symmetric(vertical: 2),
+              //       child: TextField(
+              //         style: const TextStyle(color: Colors.white, fontSize: 16),
+              //         controller: nameController,
+              //         decoration: const InputDecoration(
+              //           icon: Padding(
+              //             padding: EdgeInsets.only(left: 12.0),
+              //             child: Icon(
+              //               Icons.person,
+              //               color: Colors.white,
+              //             ),
+              //           ),
+              //           border: InputBorder.none,
+              //           hintText: 'Name',
+              //           hintStyle: TextStyle(color: Colors.white),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
               // Email TextField
               const SizedBox(height: 16),
@@ -179,7 +236,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Sign Up Button
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: SizedBox(
@@ -212,17 +269,22 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text("Already have an account? ",
+                children: [
+                  const Text("Already have an account? ",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       )),
-                  Text("Sign In",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 16,
-                      )),
+                  GestureDetector(
+                    onTap: () {
+                      widget.showSignInPage();
+                    },
+                    child: const Text("Sign In",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16,
+                        )),
+                  ),
                 ],
               )
             ],

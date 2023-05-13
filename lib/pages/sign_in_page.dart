@@ -1,28 +1,33 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movieapp/const/colors.dart';
+import 'package:movieapp/pages/sign_up_page.dart';
+
+import 'forgot_pass_page.dart';
 
 class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+  final VoidCallback showSignUpPage;
+  const SignInPage({super.key, required this.showSignUpPage});
 
   @override
   State<SignInPage> createState() => _SignInPageState();
 }
 
 class _SignInPageState extends State<SignInPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   Future signIn() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim());
+        email: emailController.text.trim(),
+        password: passwordController.text.trim());
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -40,15 +45,16 @@ class _SignInPageState extends State<SignInPage> {
             size: 100,
             color: Colors.red,
           )),
-          const Text(
+          Text(
             'Movie App',
-            style: TextStyle(
+            style: GoogleFonts.bebasNeue(
               color: Colors.red,
-              fontSize: 30,
+              fontSize: 36,
               fontWeight: FontWeight.bold,
+              letterSpacing: 2,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 8),
           const Text('Enjoy the world of movies',
               style: TextStyle(
                 color: Colors.white,
@@ -56,7 +62,7 @@ class _SignInPageState extends State<SignInPage> {
               )),
 
           // Email TextField
-          const SizedBox(height: 20),
+          const SizedBox(height: 32),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Container(
@@ -72,7 +78,7 @@ class _SignInPageState extends State<SignInPage> {
                     color: Colors.white,
                     fontSize: 16,
                   ),
-                  controller: _emailController,
+                  controller: emailController,
                   decoration: const InputDecoration(
                     icon: Padding(
                       padding: EdgeInsets.only(left: 12.0),
@@ -104,7 +110,7 @@ class _SignInPageState extends State<SignInPage> {
                 child: TextField(
                   obscureText: true,
                   style: const TextStyle(color: Colors.white),
-                  controller: _passwordController,
+                  controller: passwordController,
                   decoration: const InputDecoration(
                     icon: Padding(
                       padding: EdgeInsets.only(left: 12.0),
@@ -127,22 +133,23 @@ class _SignInPageState extends State<SignInPage> {
           ),
 
           // forgot password
-          const SizedBox(height: 12.0),
+          const SizedBox(height: 8.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => ForgotPasswordPage(),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ForgotPasswordPage(),
+                    ),
+                  );
                 },
                 child: const Text("Forgot Password?",
                     style: TextStyle(
                       color: Colors.blue,
+                      fontSize: 16,
                     )),
               ),
               const SizedBox(width: 20.0),
@@ -183,17 +190,22 @@ class _SignInPageState extends State<SignInPage> {
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("Not a member? ",
+            children: [
+              const Text("Not a member? ",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   )),
-              Text("Sign Up Now",
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 16,
-                  )),
+              GestureDetector(
+                onTap: () {
+                  widget.showSignUpPage();
+                },
+                child: const Text("Sign Up Now",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 16,
+                    )),
+              ),
             ],
           )
         ],
