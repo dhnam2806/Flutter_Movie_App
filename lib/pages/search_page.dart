@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:movieapp/const/colors.dart';
 import 'package:movieapp/data/api_handle.dart';
 import 'package:movieapp/models/search.dart';
+import 'package:movieapp/widgets/custom_navbar.dart';
 
 import '../models/movie.dart';
 import 'movie_detail.dart';
@@ -20,7 +21,6 @@ class _SearchPageState extends State<SearchPage> {
   String _searchQuery = '';
   List<dynamic> _searchResults = [];
   Future<List<Search>>? search;
-
 
   Future<List<dynamic>> searchMovies(String query) async {
     final url = Uri.parse(
@@ -49,19 +49,8 @@ class _SearchPageState extends State<SearchPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Search',
-      home: Scaffold(
-        backgroundColor: bgColor,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: const Text('Movie Search'),
-          backgroundColor: Colors.transparent,
-        ),
-        body: Padding(
+      home: SafeArea(
+        child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
@@ -74,9 +63,13 @@ class _SearchPageState extends State<SearchPage> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
                   child: TextField(
+                    cursorColor: Colors.red,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      icon: Icon(Icons.search),
+                      icon: Icon(
+                        Icons.search,
+                        color: Colors.red,
+                      ),
                       hintText: 'Search movies...',
                     ),
                     onChanged: (value) {
@@ -90,8 +83,7 @@ class _SearchPageState extends State<SearchPage> {
               const SizedBox(height: 16.0),
               Expanded(
                 child: FutureBuilder<List<dynamic>>(
-                  future: searchMovies(
-                      _searchQuery),
+                  future: searchMovies(_searchQuery),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       _searchResults = snapshot.data!;

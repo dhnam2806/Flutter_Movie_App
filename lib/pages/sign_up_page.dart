@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -60,6 +61,14 @@ class _SignUpPageState extends State<SignUpPage> {
             );
           });
     }
+    // add user to firestore
+    await FirebaseFirestore.instance
+        .collection('users').add({
+          'name': nameController.text.trim(),
+          'email': emailController.text.trim(),
+          'password': passwordController.text.trim(),
+    });
+
   }
 
   @override
@@ -106,34 +115,34 @@ class _SignUpPageState extends State<SignUpPage> {
 
               // First Name TextField
               const SizedBox(height: 32),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16),
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       color: Colors.white30,
-              //       borderRadius: BorderRadius.circular(10),
-              //     ),
-              //     child: Padding(
-              //       padding: const EdgeInsets.symmetric(vertical: 2),
-              //       child: TextField(
-              //         style: const TextStyle(color: Colors.white, fontSize: 16),
-              //         controller: nameController,
-              //         decoration: const InputDecoration(
-              //           icon: Padding(
-              //             padding: EdgeInsets.only(left: 12.0),
-              //             child: Icon(
-              //               Icons.person,
-              //               color: Colors.white,
-              //             ),
-              //           ),
-              //           border: InputBorder.none,
-              //           hintText: 'Name',
-              //           hintStyle: TextStyle(color: Colors.white),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white30,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: TextField(
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                      controller: nameController,
+                      decoration: const InputDecoration(
+                        icon: Padding(
+                          padding: EdgeInsets.only(left: 12.0),
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.white,
+                          ),
+                        ),
+                        border: InputBorder.none,
+                        hintText: 'Name',
+                        hintStyle: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
 
               // Email TextField
               const SizedBox(height: 16),

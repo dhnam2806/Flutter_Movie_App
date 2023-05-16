@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:movieapp/const/colors.dart';
-import 'package:movieapp/pages/home_page.dart';
+import 'package:movieapp/data/database_controller.dart';
 import 'package:movieapp/auth/main_page.dart';
-import 'package:movieapp/pages/sign_in_page.dart';
-import 'package:movieapp/pages/movie_detail.dart';
-import 'package:movieapp/pages/popular_page.dart';
-import 'package:movieapp/pages/search_page.dart';
-import 'package:movieapp/pages/sign_up_page.dart';
-import 'package:movieapp/pages/trending_page.dart';
-
-import 'models/movie.dart';
+import 'package:get/get.dart';
+import 'auth/auth_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  Get.put(DatabaseController());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final authC = Get.put(AuthController(), permanent: true );
+  final dbC = Get.put(DatabaseController(), permanent: true);
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

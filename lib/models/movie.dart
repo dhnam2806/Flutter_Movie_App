@@ -1,5 +1,5 @@
 class Movie {
-  final int id;
+  late final int id;
   final String title;
   final String posterPath;
   final String backdropPath;

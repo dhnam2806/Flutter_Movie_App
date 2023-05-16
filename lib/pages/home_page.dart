@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/const/colors.dart';
 import 'package:movieapp/pages/popular_page.dart';
 import 'package:movieapp/pages/upcoming_page.dart';
-
 import '../models/movie.dart';
-import '../widgets/custom_navbar.dart';
 import 'trending_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int currentIndex = 0;
   List<Movie> movies = [];
   TextEditingController searchController = TextEditingController();
   final user = FirebaseAuth.instance.currentUser!;
@@ -24,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 2,
+        elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(
@@ -37,10 +36,10 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Hello, ${user.email!}',
+              'Welcome, ${user.email!}',
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 20,
+                fontSize: 18,
               ),
               maxLines: 2,
             ),
@@ -48,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               'What do you want to watch today?',
               style: TextStyle(
                 color: Colors.white70,
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -77,36 +76,13 @@ class _HomePageState extends State<HomePage> {
                   color: searchColor,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: TextField(
-                    controller: searchController,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Search',
-                      hintStyle: TextStyle(
-                        color: Colors.white54,
-                        fontSize: 16,
-                      ),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Colors.white54,
-                        size: 28,
-                      ),
-                    ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
               )),
           const UpComing(),
           const TrendingPage(),
           const PopularPage(),
         ],
       )),
-      bottomNavigationBar: const CustomNavBar(),
+      // bottomNavigationBar: const CustomNavBar(),
     );
   }
 }

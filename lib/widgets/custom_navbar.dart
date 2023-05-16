@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/const/colors.dart';
+import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/search_page.dart';
 
 class CustomNavBar extends StatelessWidget {
@@ -19,7 +20,14 @@ class CustomNavBar extends StatelessWidget {
       ),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ),
+            );
+          },
           child: Icon(Icons.home, size: 28, color: Colors.white),
         ),
         InkWell(
