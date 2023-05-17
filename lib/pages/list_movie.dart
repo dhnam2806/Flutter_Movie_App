@@ -67,7 +67,7 @@ class _ListMovieState extends State<ListMovie> {
         } else if (snapshot.hasError) {
           return const Text('Error');
         }
-        return const CircularProgressIndicator();
+        return const CircularProgressIndicator(color: Colors.red,);
       },
     );
   }

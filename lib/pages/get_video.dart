@@ -70,7 +70,7 @@ class _WatchVideoState extends State<WatchVideo> {
           );
         } else {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(color: Colors.red,),
           );
         }
       },

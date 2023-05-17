@@ -19,8 +19,6 @@ class _TrendingMovieState extends State<TrendingMovie> {
   @override
   void initState() {
     super.initState();
-    // _movies = api_handle.fetchData();
-    // _movies = api_handle.fetchData('trending/movie/day');
     _movies = api_handle.getTrendingMovie();
   }
 
@@ -51,7 +49,7 @@ class _TrendingMovieState extends State<TrendingMovie> {
         } else if (snapshot.hasError) {
           return const Text('Error');
         }
-        return const CircularProgressIndicator();
+        return const CircularProgressIndicator(color: Colors.red,);
       },
     );
   }

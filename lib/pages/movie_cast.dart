@@ -49,18 +49,11 @@ class _MovieCastState extends State<MovieCast> {
                                     height: 160,
                                     width: 100,
                                     fit: BoxFit.cover),
-                                // child: Image.network(
-                                //   cast.fullProfilePath,
-                                //   // 'https://image.tmdb.org/t/p/w200/6X2YjjYcs8XyZRDmJAHNDlls7L4.jpg',
-                                //   height: 160,
-                                //   width: 100,
-                                //   fit: BoxFit.cover,
-                                // ),
                               ),
                               const SizedBox(height: 10),
                               Text(
                                 cast.name,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -69,7 +62,7 @@ class _MovieCastState extends State<MovieCast> {
                               const SizedBox(height: 6),
                               Text(
                                 cast.character,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
                                 ),
@@ -85,7 +78,7 @@ class _MovieCastState extends State<MovieCast> {
           } else if (snapshot.hasError) {
             return const Text('Error');
           }
-          return const CircularProgressIndicator();
+          return const CircularProgressIndicator(color: Colors.red,);
         });
   }
 }

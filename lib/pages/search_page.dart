@@ -108,9 +108,7 @@ class _SearchPageState extends State<SearchPage> {
                             child: ListTile(
                               textColor: Colors.white,
                               title: Text(movie["title"]),
-                              // title: Text(search),
                               subtitle: Text(movie["release_date"]),
-                              // subtitle: Text(search[index].releaseDate),
                               leading: Image.network(
                                 'https://image.tmdb.org/t/p/w92${movie["poster_path"]}',
                                 errorBuilder: (BuildContext context,
@@ -128,7 +126,7 @@ class _SearchPageState extends State<SearchPage> {
                       );
                     } else {
                       return const Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(color: Colors.red),
                       );
                     }
                   },

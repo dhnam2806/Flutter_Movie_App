@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -98,36 +97,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             size: 28,
                           ),
                         ),
-                        // Obx(
-                        //   () => InkWell(
-                        //     onTap: () {
-                        //       setState(() {
-                        //         if (dbC.getStatusMovie.value) {
-                        //           dbC.deleteMovie(authC.getUserId(), movie.id);
-                        //           dbC.getStatusMovie(false);
-                        //         } else {
-                        //           dbC.writeDataMovie(authC.getUserId(),
-                        //               movie.id, movie.title, movie.posterPath);
-                        //           dbC.getStatusMovie(true);
-                        //         }
-                        //       });
-                        //     },
-                        //     // child: Icon(
-                        //     //   dbC.getStatusMovie.value
-                        //     //       ? Icons.favorite
-                        //     //       : Icons.favorite_border,
-                        //     //   color: Colors.white,
-                        //     //   size: 28,
-                        //     // ),
-
-                        //     child: IconButton(
-                        //       icon: Icon(isFavorite
-                        //           ? Icons.favorite
-                        //           : Icons.favorite_border),
-                        //       onPressed: toggleFavorite,
-                        //     ),
-                        //   ),
-                        // ),
 
                         Obx(
                           () {

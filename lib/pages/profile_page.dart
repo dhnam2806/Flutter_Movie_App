@@ -82,7 +82,7 @@ class _ProfilePagesState extends State<ProfilePages> {
                 }
               }
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: Colors.red),
               );
             },
           ),
