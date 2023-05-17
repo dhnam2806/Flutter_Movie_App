@@ -4,8 +4,6 @@ import 'package:movieapp/const/colors.dart';
 import 'package:movieapp/pages/favorite_page.dart';
 import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/search_page.dart';
-
-import '../pages/profile.dart';
 import '../pages/profile_page.dart';
 
 class GNavBar extends StatefulWidget {
