@@ -6,6 +6,7 @@ import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/search_page.dart';
 
 import '../pages/profile.dart';
+import '../pages/profile_page.dart';
 
 class GNavBar extends StatefulWidget {
   const GNavBar({super.key});
@@ -21,7 +22,7 @@ class _GNavBarState extends State<GNavBar> {
     const HomePage(),
     const SearchPage(),
     FavoritesPage(),
-    const ProfilePage(),
+    ProfilePages(),
   ];
 
   @override

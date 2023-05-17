@@ -9,4 +9,10 @@ class AuthController extends GetxController {
     final uid = user!.uid;
     return uid;
   }
+
+  String getUserEmail() {
+    final User? user = _auth.currentUser;
+    final email = user!.email;
+    return email!;
+  }
 }

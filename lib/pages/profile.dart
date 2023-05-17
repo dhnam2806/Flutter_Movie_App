@@ -3,6 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../auth/auth_controller.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -25,6 +29,8 @@ class _ProfilePageState extends State<ProfilePage> {
       });
     });
   }
+
+
 
   void _onPressed() {
     FirebaseFirestore.instance.collection("users").get().then((querySnapshot) {
