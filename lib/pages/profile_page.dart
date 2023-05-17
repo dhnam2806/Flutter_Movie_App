@@ -17,54 +17,75 @@ class ProfilePages extends StatefulWidget {
 class _ProfilePagesState extends State<ProfilePages> {
   final User user = FirebaseAuth.instance.currentUser!;
 
-  final docRef = FirebaseFirestore.instance.collection("users").doc("userId");
-
-  Future<void> _onPressed() async {
-    await docRef.get().then((value) {
-      print(value.data());
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final controler = Get.put(ProfileControler());
     return Scaffold(
-      body: SingleChildScrollView(
-        child: FutureBuilder(
-          future: controler.getUserData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasData) {
-                UserModel userData = snapshot.data as UserModel;
-                print(userData.name);
-                print(userData.email);
-                return Center(
-                  child: Column(children: [
-                    Text(userData.name,
-                        style: TextStyle(fontSize: 30, color: Colors.white)),
-                    Text(userData.email,
-                        style: TextStyle(fontSize: 30, color: Colors.white)),
-                    Text(userData.password,
-                        style: TextStyle(fontSize: 30, color: Colors.white)),
-                  ]),
-                );
-              } else if (snapshot.hasError) {
-                print(snapshot.error.toString());
-                return Center(
-                  child: Text(
-                    snapshot.error.toString(),
-                    style: TextStyle(fontSize: 20, color: Colors.red),
-                  ),
-                );
-                // return const Center(
-                //   child: Text("Error", style: TextStyle(fontSize: 30, color: Colors.red),),
-                // );
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: FutureBuilder(
+            future: controler.getUserData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  UserModel userData = snapshot.data as UserModel;
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 200,
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.person,
+                              size: 100,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "${userData.name}",
+                              style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "${userData.email}",
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  print(snapshot.error.toString());
+                  return Center(
+                    child: Text(
+                      snapshot.error.toString(),
+                      style: TextStyle(fontSize: 20, color: Colors.red),
+                    ),
+                  );
+                  // return const Center(
+                  //   child: Text("Error", style: TextStyle(fontSize: 30, color: Colors.red),),
+                  // );
+                }
               }
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
         ),
       ),
     );

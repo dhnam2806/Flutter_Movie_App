@@ -4,6 +4,7 @@ import 'package:movieapp/const/colors.dart';
 import 'package:movieapp/pages/popular_page.dart';
 import 'package:movieapp/pages/upcoming_page.dart';
 import '../models/movie.dart';
+import '../models/user.dart';
 import 'trending_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   List<Movie> movies = [];
   TextEditingController searchController = TextEditingController();
   final user = FirebaseAuth.instance.currentUser!;
+  UserModel? userData;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Welcome, ${user.email!}',
+              'Welcome, ${user.email}',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,

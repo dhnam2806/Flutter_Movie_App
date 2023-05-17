@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,9 +20,155 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  // Future signUp() async {
+  //   if (passwordController.text.trim() ==
+  //       confirmPasswordController.text.trim()) {
+  //     await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //         email: emailController.text.trim(),
+  //         password: passwordController.text.trim());
+  //     // ScaffoldMessenger.of(context).showSnackBar(
+  //     //   const SnackBar(
+  //     //     content: Text('Account created successfully'),
+  //     //   ),
+  //     // );
+  //     await FirebaseFirestore.instance.collection('users').add({
+  //       'name': nameController.text.trim(),
+  //       'email': emailController.text.trim(),
+  //       'password': passwordController.text.trim(),
+  //     });
+  //   } else {
+  //     // ScaffoldMessenger.of(context).showSnackBar(
+  //     //   const SnackBar(
+  //     //     content: Text('Password and Confirm Password do not match'),
+  //     //   ),
+  //     // );
+  //     showDialog(
+  //         context: context,
+  //         builder: (context) {
+  //           return AlertDialog(
+  //             icon: const Icon(
+  //               Icons.error_outline,
+  //               color: Colors.red,
+  //               size: 32,
+  //             ),
+  //             title: const Text('Error'),
+  //             content: const Text('Password and Confirm Password do not match'),
+  //             actions: [
+  //               TextButton(
+  //                   onPressed: () {
+  //                     Navigator.pop(context);
+  //                   },
+  //                   child: const Text('OK',
+  //                       style: TextStyle(
+  //                         color: Colors.red,
+  //                         fontSize: 20,
+  //                       )))
+  //             ],
+  //           );
+  //         });
+  //   }
+  // }
+
   Future signUp() async {
-    if (passwordController.text.trim() ==
-        confirmPasswordController.text.trim()) {
+        String name = nameController.text.trim();
+    String password = passwordController.text.trim();
+    String confirmPassword = confirmPasswordController.text.trim();
+    if (name.length == 0) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            icon: const Icon(
+              Icons.error_outline,
+              color: Colors.red,
+              size: 32,
+            ),
+            title: const Text('Error'),
+            content: const Text('Please fill Name field !'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'OK',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+    
+    if (!EmailValidator.validate(emailController.text.trim())) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            icon: const Icon(
+              Icons.error_outline,
+              color: Colors.red,
+              size: 32,
+            ),
+            title: const Text('Error'),
+            content: const Text('Please enter a valid email address'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'OK',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Dừng hàm signUp nếu email không hợp lệ
+    }
+
+    if (password.length < 6) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            icon: const Icon(
+              Icons.error_outline,
+              color: Colors.red,
+              size: 32,
+            ),
+            title: const Text('Error'),
+            content: const Text('Password must be at least 6 characters long'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'OK',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Dừng hàm signUp nếu mật khẩu không hợp lệ
+    }
+    if (password == confirmPassword) {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
@@ -30,12 +177,19 @@ class _SignUpPageState extends State<SignUpPage> {
       //     content: Text('Account created successfully'),
       //   ),
       // );
+      await FirebaseFirestore.instance.collection('users').add({
+        'name': nameController.text.trim(),
+        'email': emailController.text.trim(),
+        'password': passwordController.text.trim(),
+      });
+
     } else {
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
       //     content: Text('Password and Confirm Password do not match'),
       //   ),
       // );
+
       showDialog(
           context: context,
           builder: (context) {
@@ -61,14 +215,6 @@ class _SignUpPageState extends State<SignUpPage> {
             );
           });
     }
-    // add user to firestore
-    await FirebaseFirestore.instance
-        .collection('users').add({
-          'name': nameController.text.trim(),
-          'email': emailController.text.trim(),
-          'password': passwordController.text.trim(),
-    });
-
   }
 
   @override
